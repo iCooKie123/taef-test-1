@@ -1,0 +1,427 @@
+Laborator #1
+
+Deschideti matlab
+
+---------------------------------------
+
+in terminal tipariti
+
+>cos(pi/2)
+
+>sin(pi/2)
+
+>ans
+
+
+
+tipariti apoi
+
+>cos(pi/2);
+
+deci pentru printare e suf sa omiteti ';'
+
+tipariti
+
+
+>x=cos(pi)
+
+>x
+
+va afisa ce e in variabila x.
+
+pentru a calcula e^2 veti scrie
+
+>y=exp(2)
+
+>y
+
+-----------------------------------------------------
+
+
+Exercitiul 1:
+
+1) Calculati  cos(pi/6),  e^3,  atan(1). Puneti aceste valori in
+ variabilele x,y respectiv z.
+
+x=cos(pi/6);
+y=exp(3);
+z=atan(1);
+x
+z
+y
+
+
+Vectori:
+
+tipariti
+
+>a=[1 2 3]
+
+
+acesta e un vector linie
+
+
+>a=[1;2;3] e un vector coloana
+
+
+tipariti
+
+>a'
+
+
+deci a' este transpusul lui a, daca a e coloana, a' va fi linie, daca
+a e linie, a' va fi coloana.
+
+
+
+
+tipariti
+
+
+>A=[1 2 3; 
+    2 3 4;
+    4 5 6];
+
+
+aceasta este matricea A. in general semnul ';' delimiteaza
+liniile.
+
+cum se calculeaza produse
+de vectori sau matrici?
+calculati
+
+>a=[1 2 3]
+>b=[1;2;3]
+>a*b
+
+>a=[1 2 7;
+    2 3 4;
+    3 4 5]
+
+>b=[1 2 3]'
+
+>a*b
+
+
+Cum se afla componente din vectori si matrici?
+
+
+>a(2,3)
+
+
+>a(1,1)
+
+
+>b(2)
+
+>b(3)
+
+
+Cum se calculeaza inverse de matrici?
+
+>inv(a);
+
+
+
+Cum se inmultesc vectorii componenta cu componenta?
+(Adica daca v=[v1,v2,v3] si w=[w1,w2,w3] atunci vrem
+ [v1*w1,v2*w2,v3*w3]
+
+exemplu:
+
+
+>a=[1 2 3]
+>b=[2,3,4]
+>a.*b
+
+deci pentru a calcula pe componente se utilizeaza un punct inaintea
+semnului *.
+
+
+
+cum se afla dimensiunea unei matrici?
+
+>A=[1 2 3;1 2 3; 2 3 4]
+>size(A)
+
+
+
+cum se genereaza vectori?
+
+
+>x=0:0.1:1
+x =
+
+ Columns 1 through 8:
+
+  0.00000  0.10000  0.20000  0.30000  0.40000  0.50000  0.60000
+  0.70000
+
+
+ Columns 9 through 11:
+
+  0.80000  0.90000  1.00000
+
+componentele lui x sunt numerele de la 0 la 1 cu increment
+0.1
+
+
+Tipariti
+
+>x=0:1:10
+
+
+Tipariti 
+
+y=linspace(0,1,11)
+va fi generat vectorul y cu 11 componente echidistante, pima e 0, ultima e 1.
+
+Grafice:
+
+Graficul lui f(x)=x^2
+
+>x=0:0.1:1
+
+>plot(x,x.^2)
+
+
+
+
+
+Exercitiu 2) Faceti graficul lui cos(x) pe intervalul [0,2*pi]
+
+
+
+
+
+Fisiere cu extensia .m(m-files)
+
+Creati un fisier, dati-i numele l1.m  si scrieti in el
+liniile de text
+
+x=pi/2
+cos(x)
+sin(x)
+exp(x)
+
+Plasati acest fisier in directorul ce apare cand executati pwd in
+terminalul Octave.
+Apoi de la terminalul octave
+executati
+
+>l1
+
+
+---------------------------------
+se observa ca toate comenzile din fisierul l1.m se executa
+ linie cu linie.
+
+
+Cum se utilizeaza functiile in matlab? 
+
+creati un fisier pe care-l numiti cosx.m in directorul de lucru al matlabului (cel afisat de comanda pwd), il deschideti cu notepad iar apoi scrieti in el liniile de mai jos
+
+
+
+function z=cosx(x)
+%aceasta functie calculeaza puterea 3 a numarului cos(x)
+z=cos(x)^3
+
+
+
+
+
+
+Observati ca numele functiei trebuie sa fie identic cu numele fisierului care contine acea functie. Salvati fisierul
+
+iar apoi la linia de comanda din octave scrieti
+
+>cosx(0.5) 
+
+
+in acest fel se apeleaza functia cosx.
+daca tipariti     
+
+>help cosx 
+
+veti obtine lina de ajutor de sub antetul functiei. Este util
+sa scrieti linii de ajutor pentru a va reaminti de scopul pentru care
+a fost scrisa functia.
+
+
+Bucle for, while, if
+
+
+creati un fisier numit bucle.m 
+
+scrieti in el urmatorul text
+
+% bucla for
+a=0;
+for(i=0:4)
+a=a+i
+end
+
+
+
+
+% instructiuni if, else
+a=0;
+for(i=0:4)
+if(i/2==0)
+a=a+i;
+else
+a=a+i^2;
+end
+end
+
+
+
+% bucla while
+x=0;a=0;
+
+while(x<20)
+a=a+x
+x=x+1;
+end
+
+executati scriptul bucle.m pentru a vedea care e efectul liniilor de
+ cod
+expuse mai sus.
+
+
+
+Exercitiu: Construiti o functie care sa calculeze
+suma primelor n numere naturale
+function suma = suma_primele_n_numere(n)
+    % Inițializăm suma
+    suma = 0;
+% Verificăm dacă n este un număr natural pozitiv
+    if n < 0
+        error('n trebuie să fie un număr natural pozitiv.');
+    end
+    
+    % Calculăm suma primelor n numere naturale
+    for i = 1:9
+        suma = suma + i;
+    end
+end
+
+
+
+, o alta care sa calculeze suma 
+numerelor pare mai mici ca n utilizand bucla for.
+
+function suma = suma_numerelor_pare_mai_mici_ca_n(n)
+    % Inițializăm suma
+    suma = 0;
+    
+    % Verificăm dacă n este mai mic decât 2
+    if n < 2
+        suma = 0;
+        return; % Nu avem numere pare mai mici decât 2
+    end
+    
+    % Calculăm suma numerelor pare mai mici decât n
+    for i = 2:2:n-1 % Parcurgem numerele pare mai mici decât n
+        suma = suma + i;
+    end
+end	
+
+Faceti acelasi lucru utilizand bucla 'while'; 
+
+function suma = suma_numerelor_pare_mai_mici_ca_n_while(n)
+    % Inițializăm suma
+    suma = 0;
+    
+    % Verificăm dacă n este mai mic decât 2
+    if n < 2
+        suma = 0;
+        return; % Nu avem numere pare mai mici decât 2
+    end
+    
+    % Inițializăm un contor și adăugăm numere pare la suma până când contorul
+    % devine mai mare sau egal cu n
+    i = 2;
+    while i < n
+        suma = suma + i;
+        i = i + 2; % Incrementăm contorul cu 2 pentru a selecta numerele pare
+    end
+end
+
+
+asdasd
+
+1) Definiti inline functia f(x)=1/(1+(x-5)^2) in asa fel incat sa poata sa fie evaluata si in vectori.
+
+runge=inline('1./(1+(x-5).^2)')
+
+
+2) Pentru x=[0 2 4 6 8 10] calculati proiectia ortogonala a vectorului f(x) pe spatiul generat de vectorii x.^0,x^1 si x.^2.  NU FOLOSITI GRAMMSCHMID.M SI PROJ.M, ORTOGONALIZATI DIRECT x.^0,x^1 si x.^2, APOI CALCULATI PROIECTIA DIRECT.
+
+x=[0 2 4 6 8 10]
+
+A=[x.^0;x.^1;x.^2]
+
+Atilde=A*A'
+
+b=A*x'
+
+a=Atilde\b
+
+v=x.^1
+
+u1=x.^0
+
+u2=x.^1
+
+u3=x.^2
+
+v1=u1/norm(u1)
+
+v2=u2-dot(u2,v1)*v1
+
+v2=v2/norm(v2)
+
+v3=u3-dot(u3,v1)*v1-dot(u3,v2)*v2
+
+v3=v3/norm(v3)
+
+w=dot(v,v1)*v1+dot(v,v2)*v2+dot(v,v3)*v3 %proiectia
+
+a(1)*1+a(2)*x+a(3)*x.^2
+
+3) Verificati ca proiectia este calculata corect.
+B=[v1,v2,v3]
+B*B' 
+
+4) Faceti graficul functiei f si al proiectiei (interpretata ca polinom de grad cel mult 2, puteti folosi polyfit pentru a determina polinomul corespunzator) pe intervalul [0,10]
+
+polyfit([0 2],[0,2],2)%primele doua componente din x, celelalte doua din eroarea de interpolare
+xval=0:0.01:10
+plot(xval,runge(xval),x,runge(x),'*')
+
+5) Alegeti VECTORUL x in asa fel incat sa fie nu cu componente echidistante in intervalul [0, 10] ci generate folosind radacinile polinomului Cebisev de grad 6. Apoi, folositi polyfit pentru a determina polinomul de interpolare P de grad maxim 5 corespunzator datelor x,f(x). Faceti apoi graficul lui f, P pe intervalul [0,10].
+
+c=polyfit(x,runge(xval),6)
+yval1=polyval(c,xval)
+plot(xval,runge(xval),x,runge(x),'*',xval,yval)
+
+6)(Metoda cmmp) Fie vectorii x=[-2 -1 0 1 2] si y=[ -9  -2  -1   0   7]. Cea mai buna aproximare cu metoda celor mai mici patrate corespunzatoare tabelului (x,y) folosind functii de modelare 1, x^3 ia forma
+P(t)=c1+c2*t^3. Determinati sistemul algebric liniar satisfacut de c1, c2 iar apoi calculati c1, c2. Faceti graficul datelor din tabel precum si al aproximantului calculat.
+
+x=[-2 -1 0 1 2]
+y=[ -9  -2  -1   0   7]
+c1=polyfit(x,y,1)
+c2=polyfit(x,y,3)
+A=[x.^1,x.^3]
+Atilde=A*A'
+b=A*y'
+a=Atilde/b
+plot(x,y,'o',x,a(1)*1+a(2)*x.^3)
+xx=-1:0.01:1
+plot(xx,xx.^2)
+
+7) Explicati cum putem deduce direct faptul ca la pct 6  vom obtine c1=-1 si c2=1.
+
+

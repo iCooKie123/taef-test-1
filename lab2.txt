@@ -1,0 +1,99 @@
+Metoda celor mai mici patrate
+
+2. Scrieti o functie Matlab numita matrice A care sa construiasca matricea A dat
+fiind vectorul X = [X1, X2, ...Xn] si parametrul m care controleaza gradul polinomului
+aproximant. Codul va avea structura urmatoare
+	function A=matriceA(X,m)
+	%x vector linie
+	%m -- folosim functii de modelare 1,x,...,x^(m)
+	for(j=0:m)
+	A(j+1,:)=X.^j;
+	end
+
+3.Pentru X = [1 2 3 4] si m = 2 executati matriceA(X, m). Verificati ca A este
+calculat corect.
+	X=[1,2,3,4];
+	m=2;
+	A=matriceA(X,m)
+
+4. Scrieti o functie matlab care sa primeasca input vectorii linie X, Y de mai sus
+si numarul m iar apoi sa returneze coeficientii polinomului P calculat cu formulele de mai
+sus. Inlocuiti ????? cu codul corespunzapor.Codul ar trebui sa aiba structura urmatoare
+	function a=cmmp(X, Y,m)
+	%X, Y -- tabelul de date
+	%m -- folosim functii de modelare 1,x,...,x^(m)
+	A=matriceA(X,m);
+	Atilde=A*A'
+	b=A*Y'
+	a=Atilde\b; %aflam coeficientii polinomului aproximant de la puterea cea mai mica in sus.
+	
+5. Rulati codul dumneavoastra pe tabelul X=[1 2 3 4 5], Y=[2 3 4 5 6]
+Comanda cmmp(x,y,1) ar trebui sa produca rezultatul [1 1] 
+pentru ca datele din tabel satisfac y=x+1 si deci regresia liniara este data exact de aceasta formula (ea va produce un minim egal cu 0).
+
+6. Rulati codul dumneavoastra pe tabelul X=[1 2 3 4 5] Y=[1 1.3 1.2 3 2] 
+In Matlab metoda celor mai mici patrate se aplica cu comanda polyfit. 
+Atentie, polyfit returneaza coeficientii polinomului aproximant de la puterea cea mai mare in jos.
+Comanda cmmp(X, Y,1) ar trebui sa produca acelasi output ca si comanda matlab polyfit(X, Y,1) dar in ordine inversa.
+iar cmmp(X, Y,3) la fel ca polyfit(X, Y,3) dar ordonate invers.
+	cmp = 0.5900
+    	  0.3700
+	polyf = 0.3700    0.5900
+
+7. Calculati coeficientii polinomului Lagrange de interpolare pentru tabelul 2X=[1 2 3 4] Y=[2 5 10 17] folosind cmmp. 
+Va reamintesc ca in general atunci cand folosim functii de modelare 1, x,..., xn−1 metoda de aproximare in sensul celor mai mici patrate va produce 
+exact polinomul Lagrange de interpolare a datelor din tabelul X,Y atunci cand X,Y au lungime n.
+	cmmp1(X,Y,3)
+	
+8. Fie tabelul X=[1 2 3 4 5] Y=[1 1.2 1.1 2 1.5] Faceti graficul punctelor (X(i),Y (i)) corespunzatoare acestui tabel de date precum si 
+al celei mai bune aproximari P obtinute cu cmmp pentru m=1 ( adica regresia liniara).
+	X=[1 2 3 4 5]
+	Y=[1 1.2 1.1 2 1.5]
+	c1=polyfit(X,Y,1)
+	plot(X,Y,'*',X,c1(1)+c1(2)*X)
+	
+9. Fie tabelul X=[1 2 3 4 5] Y=[1 1.2 1.1 2 1.5] Aplicati metoda de aproximare in sensul celor mai mici patrate folosind functii de modelare 
+g1(x) = sin(x), g2(x) = cos(x). 
+Faceti graficul datelor din tabel si al functiei aproximante obtinute pe intervalul [0.5, 5.5] precum si al regresiei liniare obtinute la cerinta 8.
+	A1=[X.^0;sin(X);cos(X)]
+	Atilde=A1*A1';
+	b=A1*Y';
+	a=Atilde\b;
+	xval=linspace(0.5,5.5,100)
+	plot(X,Y,'*',xval,a(1)+a(2)*sin(xval)+a(3)*cos(xval))
+	
+
+Polinoamele Cebasev
+
+ 1) Definiti inline functia Runge f(x) = 1 /(1 +x2).
+	runge=inline('1./(1+x.^2)')
+	
+ 2) Creati 9 numere echidistante in intervalul [-5,5], primul egal cu-5 ultimul egal cu 5.	
+ Stocati valorile in vectorul x.
+	x=linspace(-5,5,9)
+	
+ 3) Evaluati functia Runge in x si stocati valorile obtinute in y.
+	y=runge(x)
+	 
+ 4) Calculati coeficientii polinomului Lagrange de interpolare a datelor (x,y).
+	c1=polyfit(x,y,8)
+	
+ 5) Faceti graficul acestui polinom si al functiei Runge pe intervalul [-5,5].
+	xval=linspace(-5,5,300);
+	yval=polyval(c1,xval);
+	plot(xval,yval,'k',x,y,'*')
+	
+ 6) Refaceti calculele de mai sus inlocuind x cu 5*z unde z stocheaza radacinile polinomului Cebasev de grad 9. Faceti graficul functiei Runge,
+ si al celor doua polinoame interpolante (pe noduri echidistante si pe noduri calculate cu polinoame Cebasev.) 
+ Care interpolant aproximeaza mai bine graficul lui f intre nodurile de interpolare?
+	z=cos(2*(1:10)-1)*pi/(2*10)
+	x1=5*z
+	y1=runge(x1)
+	yp=polyval(c1,xval)
+	a=-5;
+	b=5;
+	xc=(b-a)/2*z+(a+b)/2;
+	yc=runge(xc);
+	cp=polyfit(xc,yc,9)
+	ycp=polyval(cp,xval)
+	plot(xval,yval,'b',x1,y1,'*',xval,yc,'r',xc,yc,'g', xval,ycp,'k')

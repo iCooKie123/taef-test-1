@@ -1,0 +1,273 @@
+Partea 1
+
+1. Aproximati polinomul x^3 + 2x 2
+cu un polinom din spatiul span{1, x, x2} prin proiectie in
+sensul produsului scalar de mai sus. Ce polinom se va obtine?
+% Definim polinomul f(x) = x^3 + 2x^2
+f = [1, 2, 0, 1];
+
+% Definim vectorii din spațiul span{1, x, x^2}
+g1 = [1, -2, 4];
+g2 = [1, -1, 1];
+g3 = [1, 0, 0];
+g4 = [1, 1, 1];
+g5 = [1, 2, 4];
+
+% Calculăm produsele scalare între f și vectorii g
+produs_scalar1 = dot(f, g1);
+produs_scalar2 = dot(f, g2);
+produs_scalar3 = dot(f, g3);
+produs_scalar4 = dot(f, g4);
+produs_scalar5 = dot(f, g5);
+
+% Calculăm normele pătrate ale vectorilor g
+norma_patrat1 = dot(g1, g1);
+norma_patrat2 = dot(g2, g2);
+norma_patrat3 = dot(g3, g3);
+norma_patrat4 = dot(g4, g4);
+norma_patrat5 = dot(g5, g5);
+
+% Calculăm coeficienții aproximării
+coeficient1 = produs_scalar1 / norma_patrat1;
+coeficient2 = produs_scalar2 / norma_patrat2;
+coeficient3 = produs_scalar3 / norma_patrat3;
+coeficient4 = produs_scalar4 / norma_patrat4;
+coeficient5 = produs_scalar5 / norma_patrat5;
+
+% Construim polinomul aproximativ
+polinom_aproximativ = coeficient1 * g1 + coeficient2 * g2 + coeficient3 * g3 + coeficient4 * g4 + coeficient5 * g5;
+
+% Afisăm polinomul aproximativ
+disp('Polinomul aproximativ este:');
+disp(polinom_aproximativ);
+
+
+2. Scrieti o functie Matlab numita matrice A care sa construiasca matricea A dat
+fiind vectorul X = [X1, X2, ...Xn] si parametrul m care controleaza gradul polinomului
+aproximant. Codul va avea structura urmatoare
+function A=matriceA(X,m)
+%x vector linie
+%m -- folosim functii de modelare 1,x,...,x^(m)
+for(j=0:m)
+A(j+1,:)=?????
+end
+
+function A=matriceA(X,m)
+%x vector linie
+%m -- folosim functii de modelare 1,x,...,x^(m)
+for(j=0:m)
+A(j+1,:)=X.^j;
+end
+
+
+3.Pentru X = [1 2 3 4] si m = 2 executati matriceA(X, m). Verificati ca A este
+calculat corect.
+X=[1,2,3,4];
+m=2;
+A=matriceA(X,m)
+
+A =
+
+     1     1     1     1
+     1     2     3     4
+     1     4     9    16
+
+4. Scrieti o functie matlab care sa primeasca input vectorii linie X, Y de mai sus
+si numarul m iar apoi sa returneze coeficientii polinomului P calculat cu formulele de mai
+sus. Inlocuiti ????? cu codul corespunzapor.
+Codul ar trebui sa aiba structura urmatoare
+function a=cmmp(X, Y,m)
+  %X, Y -- tabelul de date
+  %m -- folosim functii de modelare 1,x,...,x^(m)
+A=matriceA(X,m);
+Atilde=???????
+b=???????
+a=Atilde\b; %aflam coeficientii polinomului aproximant de la puterea cea mai mica in sus.
+
+
+function a=cmmp1(X, Y,m)
+%X, Y -- tabelul de date
+%m -- folosim functii de modelare 1,x,...,x^(m)
+A=matriceA(X,m);
+Atilde=A*A'
+b=A*Y'
+a=Atilde\b; %aflam coeficientii polinomului aproximant de la puterea cea mai mica in sus.
+
+5. Rulati codul dumneavoastra pe tabelul X=[1 2 3 4 5]
+Y=[2 3 4 5 6]
+Comanda cmmp(x,y,1) ar trebui sa produca rezultatul [1 1]
+pentru ca datele din tabel satisfac y = x + 1 si deci regresia liniara este data exact de aceasta formula (ea va produce un minim egal cu 0).
+
+cmmp1(X,Y,1)
+
+Atilde =
+
+     5    15
+    15    55
+
+
+b =
+
+    20
+    70
+
+
+ans =
+
+    1.0000
+    1.0000
+
+6. Rulati codul dumneavoastra pe tabelul
+X=[1 2 3 4 5]
+Y=[1 1.3 1.2 3 2]
+In Matlab metoda celor mai mici patrate se aplica cu comanda polyfit. Atentie, polyfit returneaza coeficientii polinomului aproximant de la puterea cea mai mare in jos. Comanda cmmp(X, Y,1) ar trebui sa produca acelasi output ca si comanda matlab
+polyfit(X, Y,1) dar in ordine inversa iar cmmp(X, Y,3) la fel ca polyfit(X, Y,3) dar ordonate invers.
+
+cmmp1(X, Y,1)
+
+Atilde =
+
+     5    15
+    15    55
+
+
+b =
+
+    8.5000
+   29.2000
+
+
+ans =
+
+    0.5900
+    0.3700
+
+ polyfit(X,Y,1)
+
+ans =
+
+    0.3700    0.5900
+
+
+cmmp1(X,Y,3)
+
+Atilde =
+
+           5          15          55         225
+          15          55         225         979
+          55         225         979        4425
+         225         979        4425       20515
+
+
+b =
+
+    8.5000
+   29.2000
+  115.0000
+  485.8000
+
+
+ans =
+
+    3.6000
+   -4.0500
+    1.7500
+   -0.2000
+
+polyfit(X,Y,3)
+
+ans =
+
+   -0.2000    1.7500   -4.0500    3.6000
+
+7. Calculati coeficientii polinomului Lagrange de interpolare pentru tabelul
+2
+X=[1 2 3 4]
+Y=[2 5 10 17]
+folosind cmmp. Va reamintesc ca in general atunci cand folosim functii de modelare 1, x, ..., xn−1 metoda de aproximare in sensul celor mai mici patrate va produce exact polinomul Lagrange de interpolare a datelor din tabelul X, Y atunci cand X,Y au lungime n.
+
+cmmp1(X,Y,3)
+
+8. Fie tabelul
+X=[1 2 3 4 5]
+Y=[1 1.2 1.1 2 1.5]
+Faceti graficul punctelor (X(i),Y(i)) corespunzatoare acestui tabel de date precum si al celei mai bune aproximari P obtinute cu cmmp pentru m=1 ( adica regresia liniara).
+
+
+c1=polyfit(X,Y,1)
+plot(X,Y,'*',X,c1(1)+c1(2)*X)
+
+9.Fie tabelul X=[1 2 3 4 5]
+Y=[1 1.2 1.1 2 1.5]
+Aplicati metoda de aproximare in sensul celor mai mici patrate folosind functii de modelare g1(x) = sin(x), g2(x) = cos(x). Faceti graficul datelor din tabel si al functiei aproximante obtinute pe intervalul [0.5, 5.5] precum si al regresiei liniare obtinute la cerinta 8.
+
+ X=[1 2 3 4 5]
+Y=[1 1.2 1.1 2 1.5]
+
+A1=[X.^0;sin(X);cos(X)]
+Atilde=A1*A1'
+b=A1*Y'
+xval=linspace(0.5,5.5,100)
+a=Atilde\b
+plot(X,Y,'*',xval,a(1)+a(2)*sin(xval)+a(3)*cos(xval))
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Partea 2
+
+1) Definiti inline functia Runge f(x) = 1/ (1 +x2).
+
+Runge=inline('1./(1+x.^2)')
+
+Runge =
+
+     Inline function:
+     Runge(x) = inline('1./(1+x.^2)')
+
+2) Creati 9 numere echidistante in intervalul [-5,5], primul egal cu-5 ultimul egal cu 5.
+ Stocati valorile in vectorul x.
+
+x=linspace(-5,5,9)
+
+3) Evaluati functia Runge in x si stocati valorile obtinute in y.
+ y=Runge(x)
+
+y =
+
+    0.0385    0.0664    0.1379    0.3902    1.0000    0.3902    0.1379    0.0664    0.0385
+
+4) Calculati coeficientii polinomului Lagrange de interpolare a datelor (x,y).
+c1=polyfit(x,y,8)
+
+c1 =
+
+    0.0001    0.0000   -0.0066   -0.0000    0.0982    0.0000   -0.5281   -0.0000    1.0000
+
+5) Faceti graficul acestui polinom si al functiei Runge pe intervalul [-5,5].
+xval=linspace(-5,5,100);
+>> yval=polyval(c1,xval);
+>>yp=polyval(c,xval) 
+%plot(xval,yval,'k',x,y,'*')
+
+6) Refaceti calculele de mai sus inlocuind x cu 5*z unde z stocheaza radacinile polinomului
+ Cebasev de grad 9. Faceti graficul functiei Runge, si al celor doua polinoame interpolante
+ (pe noduri echidistante si pe noduri calculate cu polinoame Cebasev.) Care interpolant
+ aproximeaza mai bine graficul lui f intre nodurile de interpolare?
+
+%xval=linspace(-5,5,100);
+%yval=polyval(c1,xval);
+%plot(xval,yval,'k',x,y,'*')
+%j=1:10;
+>> z=cos((2*(1:10)-1)*pi/(2*10));
+>> x1=5.^z;//sau fără pct
+>> y1=Runge(x1);
+>> a=-5;
+>> b=5;
+%yp=polyval(c1,xval);
+>> xc=(b-a)/2*z+(a+b)/2;
+>> yc=Runge(xc);
+>> cp=polyfit(xc,yc,8);
+>> ycp=polyval(cp,xval);
+>> plot(xval,yval,'b',x,y,'*',xval,yp,'r',xval,ycp,'k')
+
+
+
